@@ -202,14 +202,14 @@ top of this README. Per-scenario metrics (buying / browsing / intent_override / 
 under the `scenario_metrics` key in that same JSON.
 
 
-**Optional live demo:** a Flask chat UI wraps this same engine (no code path swapped, same
+**Optional live demo (UI is actually out of scope):** a Flask chat UI wraps this same engine (no code path swapped, same
 scoring behavior) at [`http://54.86.160.215:5050`](http://54.86.160.215:5050) — a window into the
 engine for a human to try, not the graded artifact.
 ```bash
 python -m scoutie.dashboard.api    # serves on :5050; set PORT to override
 ```
 
-Then open `http://localhost:5050`.
+Then open `http://localhost:5050` -- should be something like: (http://54.86.160.215:5050) 
 
 ## Repository layout
 
