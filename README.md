@@ -25,6 +25,21 @@ Five frameworks, each independently verified against the real evaluator before t
 
 Every turn, Scoutie has to decide whether the conversation is **Buying** (lock in hard constraints, filter aggressively) or **Browsing** (stay diverse, don't over-commit). Three independent pieces of evidence feed that call: what this turn's message sounds like, what the shopper's profile prior already suggests, and how hedged or certain the phrasing is ("maybe, kind of" vs. "definitely, has to"). These get represented as belief masses over Θ = {buying, browsing} and combined with **Dempster's rule of combination**, not averaged.
 
+```mermaid
+flowchart LR
+    Msg["this turn's message"] --> MM["message mass<br/>transactional vs. exploratory keywords"]
+    Msg --> CM["conviction mass<br/>hedge vs. certainty language"]
+    Prof["profile_prior"] -.->|"folded in once<br/>per session only"| PM["profile mass<br/>purchase frequency"]
+    MM --> D1{{"Dempster's rule<br/>of combination"}}
+    CM --> D1
+    PM -.-> D1
+    Run["running belief<br/>state.track_belief"] --> D2{{"combine with<br/>running belief"}}
+    D1 --> D2
+    D2 --> Gate{"buying belief ≥<br/>threshold?"}
+    Gate -->|"yes — ratchets,<br/>never reverts"| Buy["track = buying"]
+    Gate -->|no| Brow["track = browsing"]
+```
+
 **The reason**: averaging silently cancels out disagreement. A profile that says "frequent buyer" against a message that sounds like idle browsing shouldn't quietly settle into "medium confidence" — it should register as genuine uncertainty, which a Dempster-Shafer combination preserves and a plain weighted average erases. Once a session commits to "buying," a ratchet keeps it there — it never reverts, even if later language sounds vague.
 
 ### 2. Multi-route retrieval — three scorers that don't agree, fused by rank
@@ -62,6 +77,16 @@ Once the pool is fused and truncated, every remaining candidate is scored on fou
 
 Immediately after, a second, unconditional pass — `guarantee_pass` — takes whatever order that scorer produced and boosts every candidate satisfying *every* stated hard constraint above every candidate that violates *any* of them, full stop, regardless of score. This may not be the most innovative step out there and that's the point: it's the one place "provably correct" is checkable at all, so it doesn't get to lose to a heuristic. Grading that boost by how many constraints a candidate *confirms* (not just a binary satisfy/violate split) added another **+0.0094**.
 
+```mermaid
+flowchart LR
+    R["average_rating<br/>(raw observed rating)"] --> S{{"Bayesian shrinkage<br/>(count·rating + k·mean) / (count + k)"}}
+    N["rating_number<br/>(review count = count)"] --> S
+    C["CATALOG_MEAN_RATING<br/>(the prior mean)"] --> S
+    S --> F{"below the<br/>rating floor?"}
+    F -->|yes| Zero["popularity score = 0"]
+    F -->|no| Scale["linearly scaled to [0, 1]"]
+```
+
 ### 4. Constraint-satisfaction understanding
 
 Every stated hard constraint narrows the candidate domain the way a constraint narrows a CSP search space — a candidate survives only if it matches all of them. Two shapes of that domain are treated as distinct, handled conditions instead of silent edge cases: a domain still large (>20 candidates) is flagged **Over-Generality**; one nearly collapsed (<3) is a Constraint Collision.
@@ -79,7 +104,14 @@ The ask/guess call itself runs on a two-regime bias: Buying with a hard constrai
 ```
 H = − Σ pᵢ · log₂(pᵢ)
 ```
-
+```mermaid
+flowchart LR
+    Pool["current candidate pool"] --> Size{"pool size ≥<br/>MIN_POOL_FOR_ASK_HEURISTIC?"}
+    Size -->|"no — too noisy"| Fallback["ask about 'feature'<br/>(fixed fallback)"]
+    Size -->|yes| Loop["for each unknown attribute:<br/>bucket every candidate's value"]
+    Loop --> H{{"Shannon entropy<br/>H = −Σ pᵢ·log₂(pᵢ)"}}
+    H --> Pick["attribute with the<br/>highest H gets asked"]
+```
 and Scoutie asks about whichever attribute has the most information to give up — the same information-gain principle behind a decision tree's split-selection rule, applied one question at a time instead of building a whole tree up front. It's also, plainly, the single biggest one-line win in this project's history: replacing an earlier `sqrt(pool size)` heuristic with real entropy moved the score from 0.5588 to 0.6547 in one round — **+0.0959**, the largest jump anywhere in the progress log.
 
 ## The engine has no LLM in it — on purpose
