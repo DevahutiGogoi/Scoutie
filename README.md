@@ -19,7 +19,7 @@ Every session hands Scoutie the same constraint a real shopper's patience hands 
 
 ## How it thinks
 
-Five pieces, each independently verified against the real evaluator before the next one was built on top of it. Numbers below are `recommended_technical_score` deltas, pulled from the project's own run history, not estimates.
+Five frameworks, each independently verified against the real evaluator before the next one was built on top of it. Numbers below are `recommended_technical_score` deltas, pulled from the project's own run history, not estimates.
 
 ### 1. Dual-track routing — Dempster–Shafer evidence combination
 
