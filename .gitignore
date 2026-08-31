@@ -1,0 +1,30 @@
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+results.json
+.pytest_cache/
+
+# Organizer-provided participant kit (frozen catalog, local evaluator, starter baseline agent,
+# and the spec/contract docs below). Not our IP, already publicly distributed in the organizer's
+# own repo, and the catalog alone is 60MB+ -- kept locally for development/testing but never
+# pushed. See README for how to fetch them.
+data/
+evaluator/
+starter/
+docs/
+
+# Internal round-by-round development evidence trail -- kept locally as the source material for
+# composing the README/write-up, not part of the judge-facing submission itself.
+results/
+
+# Seller catalog uploads converted at runtime by the dashboard API (scoutie/dashboard/api.py's
+# /api/catalog/upload) -- not source, regenerated per upload.
+scoutie/dashboard/uploads/
+
+# Internal development-process docs (Claude Code build instructions, round-by-round dev log,
+# sandbox-branch experiment log) -- not judge-facing; kept privately backed up, not pushed.
+# README.md is the submission's documentation.
+CLAUDE.md
+PROGRESS.md
+EXPERIMENTS.md
