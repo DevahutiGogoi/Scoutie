@@ -13,6 +13,14 @@ Scoutie is a decision-making engine — the brain behind a shopping agent. Given
 | **MTTC** | On average, how many conversational turns did it take to get there? *(lower is better)* | 9.81 | **2.85** |
 | **Technical Score** | The organizer's single blended ranking number — 50% Hit Rate + 30% MRR + 20% turn-efficiency | 0.10671 | **0.813932** |
 
+For a more detailed breakdown of Scoutie's output across all metrics:
+| Scenario            | Starter → Scoutie Hit@10 | Starter → Scoutie MRR | Starter → Scoutie MTTC |
+| ------------------- | -----------------------: | --------------------: | ---------------------: |
+| **Boundary**        |            0% → **100%** |         0 → **0.774** |           11 → **3.2** |
+| **Browsing**        |        2.5% → **96.25%** |    0.0045 → **0.548** |       10.75 → **2.64** |
+| **Buying**          |      23.75% → **93.75%** |     0.127 → **0.579** |        8.63 → **2.45** |
+| **Intent Override** |         13.33% → **90%** |     0.104 → **0.702** |       10.07 → **4.37** |
+
 *(200-session public dev set; see [Steps to reproduce](#steps-to-reproduce-results). Per-scenario breakdown — buying / browsing / intent override / boundary — is written into every evaluator output under `scenario_metrics`.)*
 
 Every session hands Scoutie the same constraint a real shopper's patience hands any assistant: a hard 10-turn budget, where every clarifying question spends a turn and every guess is free. The actual design problem here was never language understanding — it's deciding, turn by turn, whether to ask or to gamble on a guess, under a budget that punishes hesitation as hard as it punishes carelessness. Everything below is built around that one tension.
