@@ -2,10 +2,7 @@
 
 **TikTok TechJam 2026 — Track 4: Conversational Shopping Agent**
 
-Scoutie is a decision-making engine — the brain behind a shopping agent. Given a hidden
-purchase target somewhere in a frozen 50,000-product Amazon catalog, it gets ten conversational
-turns to find it, through natural conversation, structured attribute questions, and ranked
-recommendations, and is scored automatically on **Hit Rate@10**, **MRR**, and **MTTC**.
+Scoutie is a decision-making engine — the brain behind a shopping agent. Given a hidden purchase target somewhere in a frozen 50,000-product Amazon catalog, it gets ten conversational turns to find it, through natural conversation, structured attribute questions, and ranked recommendations, and is scored automatically on **Hit Rate@10**, **MRR**, and **MTTC**.
 
 **This repository is the reasoning core, not a finished consumer product.** There's no
 onboarding flow, account system, or storefront here — what's built is the part that actually
