@@ -97,7 +97,8 @@ The one guardrail that matters more than any of the math: **only explicitly stat
 
 Two decisions get made every turn, independent of each other: whether to ask a clarifying question, and what to recommend *right now*. Since there's no scoring penalty for a guess that misses and real upside if it happens to land, recommendations get populated on **every** turn, asking or not — the single biggest lever on turn-efficiency in the whole system, and the one piece here with no "smarter" version to build toward.
 
-The ask/guess call itself runs on a two-regime bias: Buying with a hard constraint already on the table (or turns running low) makes a wrong guess expensive, so the bias shifts toward asking one more question first; Browsing with little committed intent makes speed matter more than protection, so the bias shifts toward guessing early with a diverse shortlist.
+The ask/guess call itself runs on a flat turn cap: while `turn_count < ASK_TURN_CAP` (7) and at least one askable attribute is still unknown, Scoutie asks; once either condition fails, it guesses for the rest of the session. A track-conditional version of this cap — biasing Buying toward asking longer and Browsing toward guessing sooner — was built and evaluated, but reverted.
+
 
 *Which* attribute to ask about, when asking wins, is where this gets genuinely interesting: every unknown attribute's value distribution across the current candidate pool gets scored by its **Shannon entropy**,
 
