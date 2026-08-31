@@ -4,7 +4,7 @@
 
 Scoutie is a decision-making engine — the brain behind a shopping agent. Given a hidden purchase target somewhere in a frozen 50,000-product Amazon catalog, it gets ten conversational turns to find it, through natural conversation, structured attribute questions, and ranked recommendations, and is scored automatically on **Hit Rate@10**, **MRR**, and **MTTC**.
 
-**This repository is the reasoning core, not a finished consumer product.** There's no onboarding flow, account system, or storefront here — what's built is the brain or the engine behind Scoutie. Everything a real shopping app would wrap around this (chat UI, checkout, a mobile client) is a separate, later problem; this is the brain that would sit underneath it. The one exception is an optional Flask dashboard (more on that below) — that's a debugging window into the engine for a human to around, not a product in its own right.
+**This repository is the brain or the engine behind Scoutie, not a finished consumer product.** There's no onboarding flow, account system, or storefront here. Everything a real shopping app would wrap around this (chat UI, checkout, a mobile client) is a separate, later problem; this is the brain that would sit underneath it. The one exception is an optional Flask dashboard (more on that below) — that's a debugging window into the engine for a human to around, not a product in its own right.
 
 | Metric | Description | Starter baseline | Scoutie |
 |---|---|---|---|
